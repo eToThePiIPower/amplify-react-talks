@@ -5,10 +5,17 @@ import { API, graphqlOperation } from 'aws-amplify'
 
 // import query definition
 import { listTalks as ListTalks } from './graphql/queries'
+import { createTalk as CreateTalk } from './graphql/mutations'
+
+// import uuid to create a unique client ID
+import uuid from 'uuid/v4'
+
+const CLIENT_ID = uuid()
 
 class App extends React.Component {
   // define some state to hold the data returned from the API
   state = {
+    name: '', description: '', speakerName: '', speakerBio: '',
     talks: []
   }
 
@@ -24,9 +31,56 @@ class App extends React.Component {
       console.log('error fetching talks...', err)
     }
   }
+  createTalk = async() => {
+    const { name, description, speakerBio, speakerName } = this.state
+    if (name === '' || description === '' || speakerBio === '' || speakerName === '') return
+
+    const talk = { name, description, speakerBio, speakerName, clientId: CLIENT_ID }
+    const talks = [...this.state.talks, talk]
+    this.setState({
+      name: '', description: '', speakerName: '', speakerBio: '', talks
+    })
+
+    try {
+      await API.graphql(graphqlOperation(CreateTalk, { input: talk }))
+      console.log('item created!')
+    } catch (err) {
+      console.log('error creating talk...', err)
+    }
+  }
+  onChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
   render() {
     return (
       <>
+        <input
+          name='name'
+          onChange={this.onChange}
+          value={this.state.name}
+          placeholder='name'
+        />
+        <input
+          name='description'
+          onChange={this.onChange}
+          value={this.state.description}
+          placeholder='description'
+        />
+        <input
+          name='speakerName'
+          onChange={this.onChange}
+          value={this.state.speakerName}
+          placeholder='speakerName'
+        />
+        <input
+          name='speakerBio'
+          onChange={this.onChange}
+          value={this.state.speakerBio}
+          placeholder='speakerBio'
+        />
+        <button onClick={this.createTalk}>Create Talk</button>
         {
           this.state.talks.map((talk, index) => (
             <div key={index}>
