@@ -100,6 +100,7 @@ class App extends React.Component {
                 <li>
                   <b>{comment.createdBy}</b>
                   <p>{comment.message}</p>
+                  <hr/>
                 </li>
               ))}
               </ul>
