@@ -1,7 +1,8 @@
 import React from 'react';
 
 // imports from Amplify library
-import { API, graphqlOperation } from 'aws-amplify'
+import { API, graphqlOperation, Auth } from 'aws-amplify'
+import { withAuthenticator } from 'aws-amplify-react'
 
 // import query definition
 import { listTalks as ListTalks } from './graphql/queries'
@@ -29,6 +30,13 @@ class App extends React.Component {
       })
     } catch (err) {
       console.log('error fetching talks...', err)
+    }
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      console.log('user:', user)
+      console.log('user info:', user.signInUserSession.idToken.payload)
+    } catch (err) {
+      console.log('error fetching user info...', err)
     }
   }
   createTalk = async() => {
@@ -95,4 +103,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default withAuthenticator(App, { includeGreetings: true })
