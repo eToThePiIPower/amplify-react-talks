@@ -95,6 +95,14 @@ class App extends React.Component {
               <h3>{talk.speakerName}</h3>
               <h5>{talk.name}</h5>
               <p>{talk.description}</p>
+              <ul>
+              {talk.comments.items.map((comment, index) => (
+                <li>
+                  <b>{comment.createdBy}</b>
+                  <p>{comment.message}</p>
+                </li>
+              ))}
+              </ul>
             </div>
           ))
         }

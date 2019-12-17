@@ -28,6 +28,12 @@ export const listTalks = `query ListTalks(
       description
       speakerName
       speakerBio
+      comments {
+        items {
+          message
+          createdBy
+        }
+      }
     }
     nextToken
   }
