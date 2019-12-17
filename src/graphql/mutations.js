@@ -12,6 +12,9 @@ export const createTalk = `mutation CreateTalk(
     description
     speakerName
     speakerBio
+    comments {
+      nextToken
+    }
   }
 }
 `;
@@ -26,6 +29,9 @@ export const updateTalk = `mutation UpdateTalk(
     description
     speakerName
     speakerBio
+    comments {
+      nextToken
+    }
   }
 }
 `;
@@ -40,6 +46,66 @@ export const deleteTalk = `mutation DeleteTalk(
     description
     speakerName
     speakerBio
+    comments {
+      nextToken
+    }
+  }
+}
+`;
+export const createComment = `mutation CreateComment(
+  $input: CreateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  createComment(input: $input, condition: $condition) {
+    id
+    message
+    createdBy
+    talk {
+      id
+      clientId
+      name
+      description
+      speakerName
+      speakerBio
+    }
+  }
+}
+`;
+export const updateComment = `mutation UpdateComment(
+  $input: UpdateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  updateComment(input: $input, condition: $condition) {
+    id
+    message
+    createdBy
+    talk {
+      id
+      clientId
+      name
+      description
+      speakerName
+      speakerBio
+    }
+  }
+}
+`;
+export const deleteComment = `mutation DeleteComment(
+  $input: DeleteCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  deleteComment(input: $input, condition: $condition) {
+    id
+    message
+    createdBy
+    talk {
+      id
+      clientId
+      name
+      description
+      speakerName
+      speakerBio
+    }
   }
 }
 `;

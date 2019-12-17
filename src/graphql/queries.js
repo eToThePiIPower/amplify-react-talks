@@ -9,6 +9,9 @@ export const getTalk = `query GetTalk($id: ID!) {
     description
     speakerName
     speakerBio
+    comments {
+      nextToken
+    }
   }
 }
 `;
@@ -25,6 +28,37 @@ export const listTalks = `query ListTalks(
       description
       speakerName
       speakerBio
+    }
+    nextToken
+  }
+}
+`;
+export const getComment = `query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    message
+    createdBy
+    talk {
+      id
+      clientId
+      name
+      description
+      speakerName
+      speakerBio
+    }
+  }
+}
+`;
+export const listComments = `query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      message
+      createdBy
     }
     nextToken
   }
