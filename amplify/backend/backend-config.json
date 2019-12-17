@@ -7,10 +7,9 @@
 				"authConfig": {
 					"additionalAuthenticationProviders": [],
 					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "API key for ConferenceAPI demo app",
-							"apiKeyExpirationDays": "365"
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authamplifyreactappc3eecb68"
 						}
 					}
 				}
